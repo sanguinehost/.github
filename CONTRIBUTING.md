@@ -1,85 +1,144 @@
 # Contributing to Sanguine Host
 
-Sanguine Host is maintained by Lucas Rose-Winters
-([@paperboygold](https://github.com/paperboygold)). This policy applies to every repository in the
-[sanguinehost](https://github.com/sanguinehost) organisation that does not have its own
-`CONTRIBUTING.md`. Where a repository has its own policy, the stricter rule applies.
+Sanguine Host is maintained by Lucas Rose-Winters ([@paperboygold](https://github.com/paperboygold)).
+This policy applies to every repository in the [sanguinehost](https://github.com/sanguinehost)
+organisation. Each repository carries an identical copy of this file, followed by a section headed
+"This repository" with its build, gates and paths. Where the two differ, the stricter rule applies.
+The canonical copy is <https://github.com/sanguinehost/.github/blob/main/CONTRIBUTING.md>.
 
-## Merge rights
+## Open in perpetuity
 
-Only @paperboygold holds human write, merge, release, and administrative rights. No other person or
-team is granted those rights by contributing, reviewing, sponsoring, or discussing the work. A pull
-request is a proposal. It does not transfer ownership, decision rights, or access. The maintainer may
-accept, revise, defer, or close a pull request without giving a reason.
+- Every release stays under the licence it shipped with. An open-source licence grant cannot be
+  withdrawn, so a released version stays open whatever happens to the project later.
+- Contributions are accepted under the repository's existing `LICENSE` (inbound = outbound). You keep
+  copyright in what you write. There is no contributor licence agreement and no copyright
+  assignment, and the project will not adopt either. Once code from other people lands, the licence
+  can only change with every copyright holder's consent.
+- The project names and logos are not licensed by the code licence (Apache-2.0 section 6). A fork is
+  welcome under the licence. It may not present itself as the official project.
+- A repository with no `LICENSE` accepts no code. Open an issue and ask for the terms first.
 
-The maintainer may install automation, such as a coding agent, with write access. That automation acts
-on his instruction. It does not hold independent merge rights, and its access is revoked when it is no
-longer needed.
+## Maintainers
 
-Contributors work from a fork and open a pull request against the default branch. Do not push to a
-repository you do not own. Access is granted per repository, is revocable at any time, and creates no
-employment, partnership, agency, equity, or right to continued access.
+The project uses the Linux model: one top maintainer integrates, and subsystem maintainers own
+paths below him.
+
+| Role | Holds | Granted when |
+|---|---|---|
+| Top maintainer | `main`, releases, signing keys, organisation admin, this policy | @paperboygold |
+| Subsystem maintainer | merge for named paths in `CODEOWNERS`; not `main` outside them, not releases | two approvers in one area and required CI green on the path |
+| Approver | approval for named paths; the top maintainer still merges | 10 merged pull requests, 3 months as a reviewer, and CI covering the path |
+| Reviewer | review comments and `Reviewed-by:` trailers; no write access | 3 merged pull requests and 2 substantive reviews |
+| Triager | labels, assignment, duplicates; no write, approval or merge | the first recurring outside contributor, or a queue the top maintainer cannot clear for two consecutive months |
+
+Today the top maintainer holds every role. The thresholds are the minimum. Meeting them makes a
+person eligible. It does not entitle them to the role.
+
+Rights are personal:
+
+- A role is granted by the top maintainer, in writing, as a change to this file and `CODEOWNERS`.
+  Contributing, sponsoring, friendship, employment or discussion grant nothing.
+- A role belongs to one person and one account. It cannot be shared, lent, transferred or
+  sub-delegated. Merging, approving or pushing on someone else's behalf is grounds for removal.
+- An account holding any role, the top maintainer's included, uses a hardware security key (FIDO2,
+  such as a YubiKey) as its GitHub second factor, with no SMS or authenticator-app fallback. Its
+  commits and tags are signed with a key held on that hardware key (an `ed25519-sk` SSH key or an
+  OpenPGP key on the device).
+- A role is removed after 6 months without activity, with 4 weeks' notice. It is removed at once,
+  without notice, on a security concern or a breach of this section.
+- A pull request is a proposal. It transfers no ownership, decision right or access. Any
+  maintainer may accept, revise, defer or close one in their paths without giving a reason.
 
 ## Before you write code
 
 - Open an issue for anything larger than a small fix. Agree the problem and the approach first.
-- Keep a pull request to one concern. Include the tests, documentation, and receipt or benchmark that
-  the change needs.
-- Read the repository's `AGENTS.md`, `README.md`, and build instructions. They are part of the
-  contribution terms.
+  A large pull request with no agreed issue may be closed unread.
+- One concern per pull request, with the tests, documentation and receipt or benchmark it needs.
+- Read the repository's `AGENTS.md`, `README.md` and the section below. They are part of these terms.
 - Do not include secrets, personal data, or code you do not have the right to submit.
+- Do not copy code from a repository with an incompatible licence.
 
 ## Sign your work
 
-Every commit in a contribution must carry a `Signed-off-by` line certifying the
+Every commit in a contribution carries a `Signed-off-by:` line certifying the
 [Developer Certificate of Origin 1.1](https://developercertificate.org/):
 
 ```text
 Signed-off-by: Your Name <you@example.com>
 ```
 
-Use `git commit -s`. The sign-off states that you wrote the contribution, or have the right to submit
-it, and that you agree to the licence terms below. Do not sign work you did not write or cannot
-license.
+Use `git commit -s`. The sign-off states that you wrote the change, or have the right to submit it
+under the repository's licence. Only a person signs off. CI refuses a pull request with an unsigned
+commit.
 
-## Licensing
+## AI tools
 
-Contributions are accepted under the repository's existing `LICENSE` (inbound = outbound). You keep
-copyright in your contribution; you do not assign it. No separate contributor agreement is required
-beyond the DCO and this policy.
+Coding agents are welcome. The person submitting is responsible for the result.
 
-If a repository has no `LICENSE`, do not submit code. Open an issue and ask for the terms first.
+- Only a human adds `Signed-off-by:`. An agent never does.
+- Name the tools in an `Assisted-by:` trailer on each commit they materially shaped:
+  `Assisted-by: <model> <tool>`.
+- You must be able to explain and defend every line. A submission the author cannot explain is
+  closed without detailed review.
+- You check the provenance and licence of generated code as if you had written it.
+- An AI system never approves, merges or closes a contribution, and is never the final word on one.
 
-Do not submit code copied from a repository with an incompatible licence. If you use generated code,
-you are responsible for its provenance and for checking that it can be contributed under these
-terms. Disclose the tool and the extent of generation in the pull request.
+The maintainer's own work uses coding agents under his direction and his gates. Those commits are
+made in his name, and he answers for them.
+
+## Response times
+
+Times are working days, Monday to Friday, Australia/Hobart.
+
+- An automated triage pass labels and ranks new issues and pull requests. Its comments say they are
+  automated. It does not count as a response.
+- A human replies to a new issue or pull request within one working day. This is a target, not a
+  guarantee, and the queue's first-response time is published quarterly.
+- A pull request with no activity from its author for 90 days may be closed.
 
 ## Security
 
-Report a suspected vulnerability privately to the maintainer, not in a public issue. If the repository
-has a `SECURITY.md`, follow it. Do not open a public pull request that demonstrates an unfixed
-vulnerability.
+Report a suspected vulnerability privately through the repository's GitHub private vulnerability
+reporting (Security, then Report a vulnerability), or as its `SECURITY.md` says. Never report one
+in a public issue or pull request. Reports are acknowledged within 3 days and fixed or published
+within 90 days. The project signs no non-disclosure agreement and treats a vulnerability found
+with AI tools as already public. Releases are built from git tags signed on the top maintainer's
+hardware key. No release artefact contains code that is not in the tagged tree.
 
-## Review and conduct
+## Conduct
 
-Review is technical and direct. Harassment, threats, doxxing, and sustained disruption are not
-accepted. The maintainer may close a contribution or block an account without notice. Disagreement
-about the code is welcome. Entitlement to a merge is not.
+Review is technical and direct. Disagreement about the code is welcome. Harassment, threats,
+doxxing and sustained disruption are not. Closing or rejecting a contribution is not a conduct
+violation. The top maintainer may close a contribution, remove a role, or block an account. When
+there is more than one maintainer, a complaint about the top maintainer goes to the subsystem
+maintainers, who answer it together.
+
+## Succession
+
+The organisation, the names, the domain and the signing keys are held by Lucas Rose-Winters
+personally. A sealed note lists them. If he dies or loses capacity, his executor or enduring
+attorney transfers them to a non-profit open-source foundation named in that note, never to an
+individual. The foundation admits members and contributors from every country. The licences
+above do not change.
 
 ## Enforcement
 
-- Organisation membership is limited to the maintainer. There are no outside collaborators and no
-  teams with repository access. Only the maintainer can create repositories or teams.
-- Every maintained, non-fork repository carries a `.github/CODEOWNERS` file naming `@paperboygold`.
-- Where the GitHub plan supports branch rules, the default branch requires a pull request and
-  code-owner review, blocks force pushes and deletion, and gives the maintainer the only bypass.
-- On the current GitHub Free plan, private repositories do not have branch rules. There the control is
-  repository permission: only @paperboygold has write or admin access. New collaborators receive
-  read-only access, and merge rights require an explicit change to this policy.
-- The maintainer audits members, outside collaborators, teams, deploy keys, and app installations
-  before granting access and after any access change.
-- Forks of upstream projects are not maintained here. Send changes upstream. This policy does not
-  grant rights in a fork.
+- Organisation membership is limited to the top maintainer until this file grants a role. There are
+  no outside collaborators and no teams with repository access.
+- Every repository carries `.github/CODEOWNERS`. Each security surface has its own entry.
+- Public repositories require a pull request, code-owner review, signed-off commits and green CI on
+  the default branch, block force pushes and deletion, and give the top maintainer the only bypass.
+  Private repositories on the GitHub Free plan have no branch rules; there only the top maintainer
+  has write access.
+- Installed apps and agents hold the narrowest permission their job needs. The triage agent reads
+  issues and writes labels and comments. It holds no contents, pull-request merge or workflow
+  permission, because issue text is untrusted input.
+- The top maintainer audits members, collaborators, teams, deploy keys and app installations before
+  any access change and after it.
+- Forks of upstream projects are not maintained here. Send changes upstream.
 
-This policy is effective 2026-10-18. Only the maintainer may change it. The canonical copy is this
-file: <https://github.com/sanguinehost/.github/blob/main/CONTRIBUTING.md>.
+Only the top maintainer changes this policy.
+
+## This repository
+
+<!-- Per-repository: build and check commands, licence, CODEOWNERS paths, link to SECURITY.md. -->
