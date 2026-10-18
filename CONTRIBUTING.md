@@ -69,7 +69,7 @@ about the code is welcome. Entitlement to a merge is not.
 ## Enforcement
 
 - Organisation membership is limited to the maintainer. There are no outside collaborators and no
-  teams with repository access.
+  teams with repository access. Only the maintainer can create repositories or teams.
 - Every maintained, non-fork repository carries a `.github/CODEOWNERS` file naming `@paperboygold`.
 - Where the GitHub plan supports branch rules, the default branch requires a pull request and
   code-owner review, blocks force pushes and deletion, and gives the maintainer the only bypass.
