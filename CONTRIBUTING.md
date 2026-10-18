@@ -31,7 +31,7 @@ employment, partnership, agency, equity, or right to continued access.
 
 ## Sign your work
 
-Every commit must carry a `Signed-off-by` line certifying the
+Every commit in a contribution must carry a `Signed-off-by` line certifying the
 [Developer Certificate of Origin 1.1](https://developercertificate.org/):
 
 ```text
