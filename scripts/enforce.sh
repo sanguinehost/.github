@@ -19,8 +19,8 @@ while IFS=$'\t' read -r repo branch visibility; do
   [ -n "$repo" ] || continue
   path=".github/CODEOWNERS"
   content=$(printf '%s\n' \
-    '# https://github.com/sanguinehost/.github/blob/main/CONTRIBUTING.md' \
-    '* @paperboygold')
+    "# https://github.com/$OWNER/.github/blob/main/CONTRIBUTING.md" \
+    "* @${MAINTAINER}")
   b64=$(printf '%s' "$content" | base64 -w0)
   raw_sha=$(gh api "repos/$OWNER/$repo/contents/$path?ref=$branch" --jq '.sha // empty' 2>/dev/null || true)
   sha=""
