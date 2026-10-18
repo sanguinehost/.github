@@ -9,8 +9,11 @@ Developer Certificate of Origin and licensed under the repository's existing lic
 
 ## Enforcement
 
-`scripts/enforce.sh` audits access, adds `.github/CODEOWNERS` to each maintained, non-fork
-repository, and applies default-branch rules where the GitHub plan supports them.
+`scripts/enforce.sh` audits access, adds a catch-all `.github/CODEOWNERS` to each maintained, non-fork
+repository that has none (a repository's own file is never overwritten), and applies the
+default-branch rules where the GitHub plan supports them. The rules require a pull request with
+code-owner review and the `Signed-off-by` check from the repository's DCO workflow, and block force
+pushes and deletion; @paperboygold is the only bypass.
 
 ```sh
 scripts/enforce.sh          # dry run

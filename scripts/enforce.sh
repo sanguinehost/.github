@@ -17,33 +17,23 @@ repos=$(gh api "orgs/$OWNER/repos?per_page=100" --paginate \
 printf '%-28s %-8s %-8s %s\n' repository branch access codeowners
 while IFS=$'\t' read -r repo branch visibility; do
   [ -n "$repo" ] || continue
+  # A repository's own CODEOWNERS names its security surfaces (CONTRIBUTING.md, "Enforcement"), so a
+  # present file is reported and never overwritten; a missing one gets the catch-all.
   path=".github/CODEOWNERS"
   content=$(printf '%s\n' \
     "# https://github.com/$OWNER/.github/blob/main/CONTRIBUTING.md" \
     "* @${MAINTAINER}")
   b64=$(printf '%s' "$content" | base64 -w0)
   raw_sha=$(gh api "repos/$OWNER/$repo/contents/$path?ref=$branch" --jq '.sha // empty' 2>/dev/null || true)
-  sha=""
-  [[ "$raw_sha" =~ ^[0-9a-f]{40}$ ]] && sha="$raw_sha"
 
-  if [ -z "$sha" ]; then
+  if [[ "$raw_sha" =~ ^[0-9a-f]{40}$ ]]; then
+    printf '%-28s %-8s %-8s %s\n' "$repo" "$branch" "$visibility" "present"
+  else
     printf '%-28s %-8s %-8s %s\n' "$repo" "$branch" "$visibility" "add"
     if [ "$APPLY" -eq 1 ]; then
       gh api -X PUT "repos/$OWNER/$repo/contents/$path" \
         -f message="Add CODEOWNERS: only @paperboygold merges" \
         -f content="$b64" -f branch="$branch" >/dev/null
-    fi
-  else
-    current=$(gh api "repos/$OWNER/$repo/contents/$path?ref=$branch" --jq '.content' 2>/dev/null | base64 -d 2>/dev/null || true)
-    if [ "$current" = "$content" ]; then
-      printf '%-28s %-8s %-8s %s\n' "$repo" "$branch" "$visibility" "ok"
-    else
-      printf '%-28s %-8s %-8s %s\n' "$repo" "$branch" "$visibility" "update"
-      if [ "$APPLY" -eq 1 ]; then
-        gh api -X PUT "repos/$OWNER/$repo/contents/$path" \
-          -f message="Update CODEOWNERS: only @paperboygold merges" \
-          -f content="$b64" -f sha="$sha" -f branch="$branch" >/dev/null
-      fi
     fi
   fi
 
